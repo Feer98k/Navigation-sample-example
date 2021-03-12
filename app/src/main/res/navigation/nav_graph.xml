@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_lista_id">
+    <fragment
+        android:id="@+id/fragment_lista_id"
+        android:name="br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment"
+        android:label="Lista de Produtos"
+        tools:layout="@layout/lista_produtos">
+
+        <action
+            android:id="@+id/action_listaProdutos_to_detalhesProdutoFragment"
+            app:destination="@id/fragment_detalhes_id"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_detalhes_id"
+        android:name="br.com.alura.aluraesporte.ui.fragment.DetalhesProdutoFragment"
+        android:label="Detalhes"
+        tools:layout="@layout/detalhes_produto">
+        <action
+            android:id="@+id/action_detalhesProdutoFragment_to_pagamentoFragment"
+            app:destination="@id/fragment_pagamento_id"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <argument
+            android:name="produtoID"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_pagamento_id"
+        android:name="br.com.alura.aluraesporte.ui.fragment.PagamentoFragment"
+        android:label="Pagamento"
+        tools:layout="@layout/pagamento">
+        <action
+            android:id="@+id/actionPagamentoFragmentToListaProdutos"
+            app:destination="@id/fragment_lista_id"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:launchSingleTop="false"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@id/fragment_lista_id"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="produtoID"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_login_id"
+        android:name="br.com.alura.aluraesporte.ui.fragment.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/login">
+        <action
+            android:id="@+id/action_login_to_listaProdutos"
+            app:destination="@id/fragment_lista_id"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@id/fragment_login_id"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_fragment_login_id_to_frament_cadastrar"
+            app:destination="@id/fragment_cadastro_id"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@id/fragment_login_id"/>
+    </fragment>
+    <action
+        android:id="@+id/action_global_login"
+        app:destination="@id/fragment_login_id"
+        app:popUpTo="@id/fragment_lista_id"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/fragment_cadastro_id"
+        android:name="br.com.alura.aluraesporte.ui.fragment.CadastroUsuario"
+        android:label="Cadastro Usuario"
+        tools:layout="@layout/cadastro_usuario" />
+</navigation>
