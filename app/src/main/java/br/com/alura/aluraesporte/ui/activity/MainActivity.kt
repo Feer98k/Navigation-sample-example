@@ -1,15 +1,24 @@
 package br.com.alura.aluraesporte.ui.activity
 
 import android.os.Bundle
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.ui.viewmodel.EstadoViewModel
+import kotlinx.android.synthetic.main.main_activity.*
+import org.koin.android.viewmodel.ext.android.viewModel
+
 
 private const val COMPRA_REALIZADA = "Compra realizada"
 
 class MainActivity : AppCompatActivity() {
+    private val viewModel: EstadoViewModel by viewModel()
 
-    private val controller by lazy{
+    private val controller by lazy {
         findNavController(R.id.produtos_activity_nav_host)
     }
 
@@ -27,14 +36,24 @@ class MainActivity : AppCompatActivity() {
         controller
             .addOnDestinationChangedListener { _, destination, _ ->
                 title = destination.label.toString()
-                when (destination.id) {
-                    //atualiza suport para destinos apos chegar na lista
-                    R.id.fragment_lista_id -> supportActionBar?.show()
-                    //atualiza suport para destinos do login
-                    R.id.fragment_login_id -> supportActionBar?.hide()
+                viewModel.componentes.observe(this, Observer {
+                    it?.let { componente ->
+                        if (componente.appBar) {
+                            supportActionBar?.show();
+                        } else {
+                            supportActionBar?.hide()
+                        }
+                        if (componente.navigation) {
+                            main_activity_bottom_navigation.visibility = VISIBLE
+                        } else {
+                            main_activity_bottom_navigation.visibility = INVISIBLE
 
-                }
+                        }
+
+                    }
+                })
             }
+        main_activity_bottom_navigation.setupWithNavController(controller)
     }
 
 

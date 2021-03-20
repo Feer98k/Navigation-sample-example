@@ -2,15 +2,16 @@ package br.com.alura.aluraesporte.ui.fragment
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
+import br.com.alura.aluraesporte.ui.viewmodel.ComponentesVisuais
 import br.com.alura.aluraesporte.ui.viewmodel.DetalhesProdutoViewModel
-import br.com.alura.aluraesporte.ui.viewmodel.LoginViewmodel
+import br.com.alura.aluraesporte.ui.viewmodel.EstadoViewModel
 import kotlinx.android.synthetic.main.detalhes_produto.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -21,7 +22,7 @@ class DetalhesProdutoFragment : BaseFragment() {
         arguments.produtoID
     }
     private val viewModel: DetalhesProdutoViewModel by viewModel { parametersOf(produtoId) }
-    private val viewModelLogin: LoginViewmodel by viewModel ()
+    private val estadoViewModel: EstadoViewModel by sharedViewModel()
     private val controllerNavigation by lazy {
         findNavController()
     }
@@ -41,6 +42,7 @@ class DetalhesProdutoFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        estadoViewModel.temComponentes = ComponentesVisuais(appBar = true,navigation = false)
         buscaProduto()
         configuraBotaoComprar()
 

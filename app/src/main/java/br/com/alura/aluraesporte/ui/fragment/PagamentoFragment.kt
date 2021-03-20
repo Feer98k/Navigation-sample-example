@@ -1,6 +1,5 @@
 package br.com.alura.aluraesporte.ui.fragment
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,7 +14,8 @@ import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
 import br.com.alura.aluraesporte.model.Pagamento
 import br.com.alura.aluraesporte.model.Produto
-import br.com.alura.aluraesporte.ui.activity.CHAVE_PRODUTO_ID
+import br.com.alura.aluraesporte.ui.viewmodel.ComponentesVisuais
+import br.com.alura.aluraesporte.ui.viewmodel.EstadoViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.PagamentoViewModel
 import kotlinx.android.synthetic.main.pagamento.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -29,13 +27,14 @@ private const val SUCESSO_AO_CRIAR_PAGAMENTO = "Pagamento Realizado"
 class PagamentoFragment : BaseFragment() {
 
     private val arguments by navArgs<DetalhesProdutoFragmentArgs>()
+    private val estadoViewModel: EstadoViewModel by viewModel()
     private val produtoId by lazy {
         arguments.produtoID
     }
     private val viewModel: PagamentoViewModel by viewModel()
     private lateinit var produtoEscolhido: Produto
     var quandoPagamentoRealizado: (idPagamento: Long) -> Unit = {}
-    private val findNavController  by lazy {
+    private val findNavController by lazy {
         findNavController()
     }
 
@@ -53,6 +52,7 @@ class PagamentoFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        estadoViewModel.temComponentes = ComponentesVisuais(appBar = true, navigation = false)
         configuraBotaoConfirmaPagamento()
         buscaProduto()
     }
