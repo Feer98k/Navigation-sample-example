@@ -6,7 +6,6 @@ Ferramentas utilizada
 - liveData
 - ViewModel
 - Koin
-- Koin 
 - Room DataBase
 - SharedPreferences
 
